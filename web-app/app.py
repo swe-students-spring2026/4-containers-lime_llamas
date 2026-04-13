@@ -1,4 +1,5 @@
 """Main Flask application for Bird Detection Dashboard."""
+
 from flask import Flask, render_template
 
 app = Flask(__name__)

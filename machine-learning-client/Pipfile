@@ -8,6 +8,7 @@ pylint = "*"
 black = "*"
 flask = "*"
 birdnet = "*"
+pymongo = "*"
 
 [dev-packages]
-
+tomli = "*"

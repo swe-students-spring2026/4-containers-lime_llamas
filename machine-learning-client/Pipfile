@@ -6,8 +6,9 @@ name = "pypi"
 [packages]
 pylint = "*"
 black = "*"
+pymongo = "*"
+birdnet = "*"
+flask = "*"
 
 [dev-packages]
-
-[requires]
-python_version = "3.10"
+tomli = "*"

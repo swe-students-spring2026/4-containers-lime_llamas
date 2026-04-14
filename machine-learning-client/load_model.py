@@ -1,4 +1,4 @@
-# the Dockerfile runs this file to auto-download the weights
+"""the Dockerfile runs this file to auto-download the weights"""
 
 import birdnet
 

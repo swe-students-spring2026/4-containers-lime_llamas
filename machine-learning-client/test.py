@@ -1,4 +1,4 @@
-# test if birdnet works properly
+""" test if birdnet works properly """
 
 import birdnet
 

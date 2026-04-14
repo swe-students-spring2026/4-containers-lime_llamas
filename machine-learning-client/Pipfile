@@ -6,9 +6,9 @@ name = "pypi"
 [packages]
 pylint = "*"
 black = "*"
-flask = "*"
-birdnet = "*"
 pymongo = "*"
+birdnet = "*"
+flask = "*"
 
 [dev-packages]
 tomli = "*"

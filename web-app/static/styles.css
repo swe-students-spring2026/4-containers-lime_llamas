@@ -71,3 +71,41 @@ button:hover {
 .active {
     background-color: #8900e1; /* Ultra Violet */
 }
+
+/* DETECTIONS PANEL */
+.detections {
+    margin: 40px auto;
+    width: 60%;
+    text-align: left;
+}
+
+.detections h2 {
+    margin-bottom: 12px;
+}
+
+/* LIST CONTAINER */
+.detection-list {
+    background: white;
+    padding: 16px;
+    max-height: 300px;
+}
+
+/* ITEM */
+.detection-item {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.detection-item:last-child {
+    border-bottom: none;
+}
+
+/* TEXT STYLES */
+.bird-name {
+    font-weight: bold;
+}
+
+.meta {
+    font-size: 14px;
+    color: gray;
+}

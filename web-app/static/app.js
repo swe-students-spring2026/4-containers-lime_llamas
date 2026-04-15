@@ -43,6 +43,30 @@ async function recordChunk() {
 
 
 btn.addEventListener("click", async () => {
+//detections
+function renderDetections(detections) {
+    detectionList.innerHTML = "";
+    detections.forEach(d => {
+        const item = document.createElement("div");
+        item.className = "detection-item";
+        item.innerHTML = `
+            <div class="bird-name">${d.name}</div>
+            <div class="meta">
+                Confidence: ${d.confidence}% • ${d.time}
+            </div>
+        `;
+        detectionList.appendChild(item);
+    });
+}
+
+function loadDetections() {
+    fetch("/detections")
+        .then(res => res.json())
+        .then(data => renderDetections(data));
+}
+
+//start listening and stop listening
+btn.addEventListener("click", () => {
     isListening = !isListening;
 
     if (isListening) {
@@ -79,3 +103,5 @@ btn.addEventListener("click", async () => {
         // fetch("/stop").then(response => response.json()).then(data => console.log(data));
     }
 });
+
+loadDetections();

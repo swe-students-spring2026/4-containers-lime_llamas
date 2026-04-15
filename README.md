@@ -3,8 +3,6 @@
 [![Web App CI](https://github.com/swe-students-spring2026/4-containers-lime_llamas/actions/workflows/lint.yml/badge.svg)](https://github.com/swe-students-spring2026/4-containers-lime_llamas/actions/workflows/lint.yml)
 [![ML Client CI](https://github.com/swe-students-spring2026/4-containers-lime_llamas/actions/workflows/lint.yml/badge.svg)](https://github.com/swe-students-spring2026/4-containers-lime_llamas/actions/workflows/lint.yml)
 
-
-
 A containerized bird sound monitoring system built with Flask, MongoDB, Docker Compose, and BirdNET. The system records and processes bird audio data, identifies bird species through machine learning, stores results in MongoDB, and displays recent detections in a web dashboard.
 
 ## Team
@@ -39,6 +37,7 @@ Project board: [GitHub Project 118](https://github.com/orgs/swe-students-spring2
 ├── .github/workflows/        # CI workflows
 ├── docker-compose.yml        # Multi-container orchestration
 └── README.md
+```
 
 ## Architecture
 

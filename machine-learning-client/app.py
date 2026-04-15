@@ -84,7 +84,7 @@ async def analyze():
 
             df = prediction.to_dataframe()
 
-            return jsonify(df.to_json())
+            return jsonify(df.to_json(orient="records"))
 
         except (FFmpegError, ValueError) as e:
             return jsonify(error=str(e), message="PyAV error:"), 400

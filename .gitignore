@@ -1,3 +1,6 @@
+*.ogg
+!Colaptes_auratus_XC104537.ogg
+
 # mac junk
 .DS_Store
 

@@ -6,7 +6,12 @@ from datetime import datetime, timezone
 import os
 
 import av
+
+# disabled pylint no-name-in-module
+# as it cannot find FFmpegError
+
 from av.error import FFmpegError
+
 import birdnet
 from flask import Flask, jsonify, render_template, request
 import numpy as np
@@ -14,8 +19,15 @@ from numpy import float32
 import numpy.typing as npt
 from pymongo import MongoClient
 
-# import .config
+from dotenv import load_dotenv
 
+# import .config
+# pylint complains about relative imports.
+# machine-learning-client is not a valid module name
+# so, we cannot import anything.
+# to-do: fix this later
+
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -35,6 +47,16 @@ audio_model = birdnet.load("acoustic", "2.4", "tf")
 
 
 RATE = 48000
+APPLY_SIGMOID = True
+SIGMOID_SENSITIVITY = 1.2
+DEFAULT_CONFIDENCE_THRESHOLD = 0.8  # 0.8
+
+print(f"""birdnet inference options:
+      RATE {RATE}
+      APPLY_SIGMOID {APPLY_SIGMOID}
+      SIGMOID_SENSITIVITY {SIGMOID_SENSITIVITY}
+      DEFAULT_CONFIDENCE_THRESHOLD {DEFAULT_CONFIDENCE_THRESHOLD}
+""")
 
 
 @app.after_request
@@ -67,7 +89,12 @@ async def analyze():
             # audio = extract_audio(data_file_path)
             # prediction = audio_model.predict_arrays((audio, RATE))
 
-            prediction = audio_model.predict(data_file_path)
+            prediction = audio_model.predict(
+                data_file_path,
+                apply_sigmoid=APPLY_SIGMOID,
+                sigmoid_sensitivity=SIGMOID_SENSITIVITY,
+                default_confidence_threshold=DEFAULT_CONFIDENCE_THRESHOLD,
+            )
 
             df = prediction.to_dataframe()
 

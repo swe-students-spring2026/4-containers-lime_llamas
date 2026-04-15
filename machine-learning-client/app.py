@@ -33,9 +33,9 @@ audio_model = birdnet.load("acoustic", "2.4", "tf")
 
 
 RATE = 48000
-APPLY_SIGMOID=True
-SIGMOID_SENSITIVITY=1.5
-DEFAULT_CONFIDENCE_THRESHOLD=0.9 #0.8
+APPLY_SIGMOID = True
+SIGMOID_SENSITIVITY = 1.5
+DEFAULT_CONFIDENCE_THRESHOLD = 0.9  # 0.8
 
 print(f"""birdnet inference options:
       RATE {RATE}
@@ -79,8 +79,8 @@ async def analyze():
                 data_file_path,
                 apply_sigmoid=APPLY_SIGMOID,
                 sigmoid_sensitivity=SIGMOID_SENSITIVITY,
-                default_confidence_threshold=DEFAULT_CONFIDENCE_THRESHOLD
-                )
+                default_confidence_threshold=DEFAULT_CONFIDENCE_THRESHOLD,
+            )
 
             df = prediction.to_dataframe()
 

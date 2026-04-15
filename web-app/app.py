@@ -1,8 +1,6 @@
 """Main Flask application for Bird Detection Dashboard."""
 
-from datetime import datetime
 import os
-import random
 from flask import Flask, render_template, jsonify
 from pymongo import MongoClient
 

@@ -1,15 +1,17 @@
 """test if birdnet works properly"""
 
 import birdnet
+from dotenv import load_dotenv
 
-import io
-import soundfile as sf
+load_dotenv()
 
-audio_model = birdnet.load("acoustic", "2.4", "pb")
+# audio_model = birdnet.load("acoustic", "2.4", "tf")
+
+audio_model = birdnet.load_perch_v2("CPU")
 
 predictions = audio_model.predict(
     "example/Colaptes_auratus.ogg",
-    # predict only the species from the file
+    # "example/soundscape.wav",
     # custom_species_list="example/species_list.txt",
-    # batch_size=64,
 )
+print(predictions.to_structured_array())

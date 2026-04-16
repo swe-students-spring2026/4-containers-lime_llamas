@@ -39,7 +39,7 @@ login_manager = LoginManager(app)
 login_manager.login_view = "login"
 
 
-class User(UserMixin):
+class User(UserMixin):  # pylint: disable=too-few-public-methods
     """Minimal user model backed by MongoDB."""
 
     def __init__(self, username):

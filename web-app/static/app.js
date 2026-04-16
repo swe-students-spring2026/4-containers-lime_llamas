@@ -115,12 +115,6 @@ btn.addEventListener("click", () => {
         recordChunk();
         record_interval = setInterval(recordChunk, 3000); // new recorder every 3s
 
-
-        // later: call backend API
-        // fetch("/start")
-
-        // fetch("/start").then(response => response.json()).then(data => console.log(data));
-
     } else {
         btn.textContent = "Start Listening";
         btn.classList.remove("stop");
@@ -135,8 +129,6 @@ btn.addEventListener("click", () => {
 
         clearInterval(record_interval); 
         record_interval = null;
-
-        // fetch("/stop").then(response => response.json()).then(data => console.log(data));
     }
 });
 

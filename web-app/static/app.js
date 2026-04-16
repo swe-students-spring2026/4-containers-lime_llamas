@@ -125,10 +125,7 @@ btn.addEventListener("click", () => {
         statusDot.classList.add("idle");
 
         clearInterval(timer_interval);
-        timer_interval = null;
-
         clearInterval(record_interval); 
-        record_interval = null;
     }
 });
 

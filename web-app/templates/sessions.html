@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bird Detection Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+
+    <header class="header">
+        <h1>Bird Detection Dashboard</h1>
+        <p class="subtitle">Real-time bird sound detection</p>
+        <div class="header-user">
+            Signed in as <strong>{{ username }}</strong> &nbsp;|&nbsp;
+            <a href="/logout" class="logout-link">Log out</a>
+        </div>
+    </header>
+
+
+    <!-- RECENT DETECTIONS -->
+    <section class="detections">
+        <h2>Recent Detections</h2>
+        <div id="detectionList" class="detection-list">
+            <!-- Items will be inserted here -->
+        </div>
+    </section>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

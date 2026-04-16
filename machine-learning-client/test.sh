@@ -2,16 +2,21 @@
 
 pushd example
 
-ffmpeg -i Colaptes_auratus_XC104537.ogg -f segment -segment_time 3 -c copy Colaptes_auratus_XC104537_%03d.ogg
+file="XC558716.mp3"
 
-for i in {001..008}; do
-	file="Colaptes_auratus_XC104537_$i.ogg"
+ffmpeg -i "${file}" \
+    -c:a libopus -b:a 128k \
+    -f segment -segment_time 3 -reset_timestamps 1 \
+    "${file}_%03d.webm" \
 
-	echo file
+for i in {001..005}; do
+	seg="${file}_$i.webm"
+
+	echo seg 
 
 	curl -X POST \
-		-H "Content-Type: audio/ogg" \
-		--data-binary "@${file}" \
+		-H "Content-Type: audio/webm;codecs=opus" \
+		--data-binary "@${seg}" \
 		http://localhost:8000/analyze | python3 -m json.tool
 done
 

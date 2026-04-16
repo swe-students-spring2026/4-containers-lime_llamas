@@ -12,6 +12,9 @@ let seconds = 0;
 let timer_interval = null;
 let record_interval = null;
 
+let time_start = Date.now()
+let record_ids = []
+
 function updateTimer() {
     seconds++;
     let minutes = Math.floor(seconds / 60);
@@ -21,6 +24,8 @@ function updateTimer() {
     secs = secs.toString().padStart(2, "0");
     document.getElementById("timer").textContent = `${minutes}:${secs}`;
 }
+
+
 
 async function recordChunk() {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true, mimeType: 'audio/webm; codecs=opus' });
@@ -104,6 +109,20 @@ function renderCurrentResult(apiResponse) {
     currentResultCard.classList.remove("empty");
 }
 
+function saveSession(time_start, seconds, record_ids) {
+    fetch('/save_session', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            time_start: time_start,
+            seconds: seconds,
+            record_ids: record_ids
+        }),
+    })
+}
+
 //start listening and stop listening
 btn.addEventListener("click", () => {
     isListening = !isListening;
@@ -116,13 +135,16 @@ btn.addEventListener("click", () => {
         statusText.textContent = "Listening...";
         statusDot.classList.remove("idle");
         statusDot.classList.add("active");
+
         seconds = 0;
+        time_start = Date.UTC.now()
+        record_ids = []
+
         document.getElementById("timer").textContent = "00:00";
         timer_interval = setInterval(updateTimer, 1000); // update timer every second
 
         recordChunk();
         record_interval = setInterval(recordChunk, 3000); // new recorder every 3s
-
     } else {
         btn.textContent = "Start Listening";
         btn.classList.remove("stop");
@@ -134,6 +156,9 @@ btn.addEventListener("click", () => {
 
         clearInterval(timer_interval);
         clearInterval(record_interval);
+
+
+
     }
 });
 

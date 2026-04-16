@@ -23,17 +23,17 @@ function updateTimer() {
 }
 
 async function recordChunk() {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true, mimeType: 'audio/webm; codecs=opus' });
 
     const recorder = new MediaRecorder(stream);
     const chunks = [];
 
     recorder.ondataavailable = e => chunks.push(e.data);
     recorder.onstop = async () => {
-        const blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" });
+        const blob = new Blob(chunks, { type: "audio/webm; codecs=opus" });
         const res = await fetch("http://localhost:8000/analyze", {
             method: "POST",
-            headers: { "Content-Type": "audio/ogg" },
+            headers: { "Content-Type": "audio/webm" },
             body: blob,
         });
         const detections = await res.json();
@@ -50,8 +50,11 @@ async function recordChunk() {
 //detections
 function renderDetections(detections) {
     detectionList.innerHTML = "";
+    let d_counter = 0
+    let d_max = 4
 
-    detections.forEach(d => {
+    // detections.forEach(d => {
+    for (const d of detections) {
         const item = document.createElement("div");
         item.className = "detection-item";
 
@@ -72,7 +75,12 @@ function renderDetections(detections) {
         `;
 
         detectionList.appendChild(item);
-    });
+
+        if (++d_counter == d_max) {
+            return
+        }
+    }
+    // });
 }
 
 function loadDetections() {
@@ -82,15 +90,15 @@ function loadDetections() {
 }
 
 //for our current detections card
-function renderCurrentResult(apiResponse){
-    if(!apiResponse.detections || apiResponse.detections.length ==0){
+function renderCurrentResult(apiResponse) {
+    if (!apiResponse.detections || apiResponse.detections.length == 0) {
         currentBirdName.textContent = "No detection yet";
         currentBirdMeta.textContent = "Listening...";
         currentResultCard.classList.add("empty");
         return;
     }
     const top = apiResponse.detections[0];
-    const confidencePercent = top.confidence!==null && top.confidence !== undefined ? (top.confidence*100).toFixed(2): "N/A";
+    const confidencePercent = top.confidence !== null && top.confidence !== undefined ? (top.confidence * 100).toFixed(2) : "N/A";
     currentBirdName.textContent = top.species_name ?? "Unkown species";
     currentBirdMeta.textContent = `Confidence: ${confidencePercent}%`;
     currentResultCard.classList.remove("empty");
@@ -125,7 +133,7 @@ btn.addEventListener("click", () => {
         statusDot.classList.add("idle");
 
         clearInterval(timer_interval);
-        clearInterval(record_interval); 
+        clearInterval(record_interval);
     }
 });
 

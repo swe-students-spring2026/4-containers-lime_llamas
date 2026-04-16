@@ -77,7 +77,7 @@ def test():
 @app.post("/analyze")
 async def analyze():
     """send chunks here"""
-    with tempfile.NamedTemporaryFile(suffix=".ogg", delete=False) as data_file:
+    with tempfile.NamedTemporaryFile(suffix=".webm", delete=False) as data_file:
         data_file_path = Path(data_file.name)
 
         _ = data_file.write(request.data)
@@ -86,15 +86,15 @@ async def analyze():
             if not request.data:
                 return jsonify(error="Invalid Input", message="Audio empty"), 400
 
-            # audio = extract_audio(data_file_path)
-            # prediction = audio_model.predict_arrays((audio, RATE))
+            audio = extract_audio(data_file_path)
+            prediction = audio_model.predict_arrays((audio, RATE))
 
-            prediction = audio_model.predict(
-                data_file_path,
-                apply_sigmoid=APPLY_SIGMOID,
-                sigmoid_sensitivity=SIGMOID_SENSITIVITY,
-                default_confidence_threshold=DEFAULT_CONFIDENCE_THRESHOLD,
-            )
+            # prediction = audio_model.predict(
+            #     data_file_path,
+            #     apply_sigmoid=APPLY_SIGMOID,
+            #     sigmoid_sensitivity=SIGMOID_SENSITIVITY,
+            #     default_confidence_threshold=DEFAULT_CONFIDENCE_THRESHOLD,
+            # )
 
             df = prediction.to_dataframe()
 

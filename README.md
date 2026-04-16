@@ -104,7 +104,7 @@ To create local environment files, copy each example file to `.env` inside the s
 
 ### 1. Clone the repository
 
-    git clone REPLACE_WITH_YOUR_REPO_URL
+    git clone git@github.com:swe-students-spring2026/4-containers-lime_llamas.git
     cd 4-containers-lime_llamas
 
 ### 2. Create environment files
@@ -155,14 +155,17 @@ Each subsystem uses Pipenv for dependency management.
 
 The repository uses GitHub Actions to run automated checks on pushes and pull requests.
 
-The CI workflow includes:
+Current CI coverage includes:
 
-- `black` for formatting checks
-- `pylint` for linting checks
+- formatting checks with `black`
+- linting checks with `pylint`
+- subsystem-specific workflows for the web app and machine-learning client
 
-These checks are defined in:
+Relevant workflow files are located in:
 
-    .github/workflows/lint.yml
+- `.github/workflows/web_app.yml`
+- `.github/workflows/machine_learning_client.yml`
+- `.github/workflows/lint.yml`
 
 ## Data Model
 
@@ -191,11 +194,20 @@ This structure allows the machine-learning client to write processed results whi
 
 After starting the system with Docker Compose:
 
-- the machine-learning client processes bird audio data
-- classification results are stored in MongoDB
-- the web app reads the stored data and displays recent detections
+- the web app can capture or submit short audio clips
+- the machine-learning client analyzes audio using BirdNET
+- detection results are stored in MongoDB
+- the web app reads and displays recent detections from the database
 
 This creates a complete end-to-end pipeline from audio analysis to dashboard visualization.
+
+## Demo Flow
+
+1. Start all containers with `docker compose up --build`.
+2. Open the dashboard at `http://localhost:3000`.
+3. Record audio in the browser or send a sample audio file to `http://localhost:8000/analyze`.
+4. Let the machine-learning client process the audio with BirdNET.
+5. View recent detections in the dashboard or at `http://localhost:3000/detections`.
 
 ## Technologies Used
 

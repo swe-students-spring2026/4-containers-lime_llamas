@@ -125,6 +125,7 @@ function saveSession(time_start, seconds, record_ids) {
 
 //start listening and stop listening
 btn.addEventListener("click", () => {
+    console.log("listening button clicked");
     isListening = !isListening;
 
     if (isListening) {
@@ -137,7 +138,7 @@ btn.addEventListener("click", () => {
         statusDot.classList.add("active");
 
         seconds = 0;
-        time_start = Date.UTC.now()
+        time_start = Date.now()
         record_ids = []
 
         document.getElementById("timer").textContent = "00:00";
